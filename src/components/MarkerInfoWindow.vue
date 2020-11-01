@@ -40,14 +40,24 @@
       >
         Update Bike
       </ZButton>
+
       <ZButton
-        color="danger"
         class="mt-2"
+        color="warning"
         :loading="deleteLoading"
-        @click="deleteBike"
+        @click="showDelete = !showDelete"
       >
-        Delete Bike
+        Confirm and Delete
       </ZButton>
+      <div v-if="showDelete">
+        <ZInput
+          v-model="deleteInput"
+          placeholder="Enter Serial Number to Delete"
+        />
+        <ZButton color="danger" :disabled="deleteDisabled" @click="deleteBike">
+          Delete Bike
+        </ZButton>
+      </div>
     </div>
   </ZContainer>
 </template>
@@ -88,6 +98,8 @@ export default {
         in_order: null,
         service_status: null,
       },
+      deleteInput: "",
+      showDelete: false,
     };
   },
   mounted() {
@@ -109,6 +121,11 @@ export default {
       return (
         this.update.in_order === this.bike.in_order &&
         this.update.service_status === this.bike.service_status
+      );
+    },
+    deleteDisabled() {
+      return (
+        this.deleteInput.toLowerCase() !== this.bike.serial_number.toLowerCase()
       );
     },
   },
