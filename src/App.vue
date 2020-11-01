@@ -49,17 +49,7 @@ export default {
     };
   },
   async mounted() {
-    try {
-      // Get bikes from API
-      const bikes = await axios.get(
-        `https://jsonbox.io/${process.env.VUE_APP_JSON_BOX_ID}`
-      );
-
-      const { data } = bikes;
-      this.bikes = data;
-    } catch (err) {
-      console.error(err);
-    }
+    await this.getBikes();
 
     try {
       // Load google maps asynchronously
@@ -92,6 +82,18 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+    async getBikes() {
+      try {
+        const bikes = await axios.get(
+          `https://jsonbox.io/${process.env.VUE_APP_JSON_BOX_ID}`
+        );
+
+        const { data } = bikes;
+        this.bikes = data;
+      } catch (err) {
+        console.error(err);
+      }
+    },
     /**
      * @param bike {object} bike to add
      */
@@ -106,6 +108,7 @@ export default {
         const { data } = result;
         this.bikes = [...this.bikes, data[0]];
         this.ui.postLoading = false;
+        this.showModal = false;
       } catch (err) {
         console.error(err);
       }
