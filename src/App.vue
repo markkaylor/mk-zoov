@@ -52,12 +52,10 @@ export default {
     await this.getBikes();
 
     try {
-      // Load google maps asynchronously
       await loadScript(
         `https://maps.googleapis.com/maps/api/js?key=${process.env.VUE_APP_GOOGLE_MAPS_API_KEY}`
       );
 
-      // Initalize a map
       this.initMap();
     } catch (err) {
       console.error(err);
@@ -65,7 +63,6 @@ export default {
   },
   methods: {
     initMap() {
-      // Create google map centered on first bike found
       // eslint-disable-next-line
       this.map = new google.maps.Map(this.$refs.map, {
         zoom: 12,

@@ -65,11 +65,6 @@ export default {
   },
   computed: {
     isDisabled() {
-      console.log(
-        !this.bike.serial_number,
-        !this.bike.location.coordinates[0],
-        !this.bike.location.coordinates[1]
-      );
       return (
         !this.bike.serial_number ||
         !this.bike.location.coordinates[0] ||

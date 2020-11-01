@@ -46,8 +46,8 @@ export default {
     // eslint-disable-next-line
     this.marker = new google.maps.Marker({
       position: {
-        lat: this.bike.location.coordinates[1],
         lng: this.bike.location.coordinates[0],
+        lat: this.bike.location.coordinates[1],
       },
       map: this.map,
     });
