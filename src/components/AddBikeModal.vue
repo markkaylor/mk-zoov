@@ -11,13 +11,13 @@
             </div>
             <ZInput v-model="bike.serial_number" label="Serial Number" />
             <ZInput
-              :value="coordinateStrings[0]"
+              v-model="lonString"
               @input="parseCoordinate($event, 0)"
               label="Longitude"
               type="number"
             />
             <ZInput
-              :value="coordinateStrings[1]"
+              v-model="latString"
               @input="parseCoordinate($event, 1)"
               label="Latitude"
               type="number"
@@ -61,26 +61,13 @@ export default {
         service_status: 1,
         battery_level: 100,
       },
+      latString: "",
+      lonString: "",
     };
   },
   computed: {
     isDisabled() {
-      return (
-        !this.bike.serial_number ||
-        !this.bike.location.coordinates[0] ||
-        !this.bike.location.coordinates[1]
-      );
-    },
-    /**
-     * ZInput only accepts prop type value of string
-     * but float is needed on the bike model.
-     */
-    coordinateStrings() {
-      return !this.bike.location.coordinates.includes(undefined)
-        ? this.bike.location.coordinates.map((coordinate) =>
-            coordinate.toString()
-          )
-        : "";
+      return !this.bike.serial_number || !this.latString || !this.lonString;
     },
   },
   methods: {
